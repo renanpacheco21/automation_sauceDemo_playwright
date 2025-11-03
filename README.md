@@ -60,7 +60,9 @@ automation_sauceDemo_playwright/
 │   └── ProductsPage.ts            # Página de produtos
 │
 ├── tests/                          # Arquivos de teste
-│   └── login-validation.spec.ts   # Testes de validação de login
+│   ├── login-validation.spec.ts   # Testes de validação de login
+│   ├── products-validation.spec.ts # Testes de validação de produtos
+│   └── products-sorting.spec.ts  # Testes de ordenação/filtros de produtos
 │
 ├── .github/
 │   └── workflows/
@@ -76,7 +78,16 @@ automation_sauceDemo_playwright/
 O projeto utiliza o padrão **Page Object Model** para melhor organização e manutenibilidade do código:
 
 - **`pages/LoginPage.ts`**: Encapsula todos os elementos e ações da página de login
+  - Preenchimento de campos (username, password)
+  - Submissão do formulário
+  - Validação de mensagens de erro
+  
 - **`pages/ProductsPage.ts`**: Encapsula elementos e validações da página de produtos
+  - Listagem e contagem de produtos
+  - Validação de preços e nomes
+  - Ordenação e filtros
+  - Validação de botões "Add to cart"
+  - Verificação de disponibilidade dos produtos
 
 Este padrão facilita a manutenção dos testes, centralizando os seletores e ações em classes reutilizáveis.
 
@@ -91,13 +102,22 @@ npx playwright test
 ### Executar um arquivo de teste específico
 
 ```bash
+# Testes de login
 npx playwright test tests/login-validation.spec.ts
+
+# Testes de validação de produtos
+npx playwright test tests/products-validation.spec.ts
+
+# Testes de ordenação de produtos
+npx playwright test tests/products-sorting.spec.ts
 ```
 
 ### Executar um teste específico
 
 ```bash
 npx playwright test tests/login-validation.spec.ts -g "deve realizar login com sucesso"
+npx playwright test tests/products-validation.spec.ts -g "quantidade de produtos"
+npx playwright test tests/products-sorting.spec.ts -g "ordenar produtos por nome"
 ```
 
 ### Executar em modo interativo (UI Mode)
@@ -206,6 +226,21 @@ Edite o arquivo `playwright.config.ts` para ajustar:
 ### Login com Sucesso
 
 4. ✅ **Login válido**: Valida redirecionamento para página de produtos e exibição do título
+
+### Validação de Produtos
+
+5. ✅ **Quantidade de produtos**: Valida que exatamente 6 produtos são exibidos na tela
+6. ✅ **Disponibilidade para compra**: Valida que todos os produtos têm botão "Add to cart" habilitado e visível
+7. ⏭️ **Validação de prefixo**: Teste skipado - verifica se todos os produtos começam com "Sauce Labs"
+
+### Ordenação e Filtros de Produtos
+
+8. ✅ **Ordenação por nome (A a Z)**: Valida ordenação alfabética crescente
+9. ✅ **Ordenação por nome (Z a A)**: Valida ordenação alfabética decrescente
+10. ✅ **Ordenação por preço (menor para maior)**: Valida ordenação de preços crescente
+11. ✅ **Ordenação por preço (maior para menor)**: Valida ordenação de preços decrescente
+12. ✅ **Visibilidade do dropdown**: Valida que o dropdown de ordenação está visível
+13. ✅ **Validação de preços**: Valida que todos os produtos têm preço válido maior que zero
 
 ## 🛠️ Tecnologias Utilizadas
 
