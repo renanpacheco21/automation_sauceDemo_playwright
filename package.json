@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Testes automatizados E2E com Playwright",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "report": "npx playwright show-report"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
