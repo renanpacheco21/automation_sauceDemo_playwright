@@ -98,6 +98,34 @@ export class ProductsPage {
     return await this.addToCartButtons.count();
   }
 
+  async addProductToCartByName(productName: string) {
+    // Encontra o produto pelo nome
+    const productItem = this.productItems.filter({ hasText: productName }).first();
+    
+    // Verifica se o produto foi encontrado
+    await expect(productItem).toBeVisible();
+    
+    // Encontra e clica no botão "Add to cart" do produto
+    const addToCartButton = productItem.locator('button[data-test*="add-to-cart"]');
+    await expect(addToCartButton).toBeVisible();
+    await expect(addToCartButton).toBeEnabled();
+    await addToCartButton.click();
+  }
+
+  async getProductPriceByName(productName: string): Promise<number> {
+    // Encontra o produto pelo nome
+    const productItem = this.productItems.filter({ hasText: productName }).first();
+    await expect(productItem).toBeVisible();
+    
+    // Obtém o preço do produto
+    const priceText = await productItem.locator('.inventory_item_price').textContent();
+    if (priceText) {
+      const price = parseFloat(priceText.replace('$', '').trim());
+      return price;
+    }
+    throw new Error(`Preço não encontrado para o produto: ${productName}`);
+  }
+
   async getAllProductPrices(): Promise<number[]> {
     const prices: number[] = [];
     const count = await this.productPrices.count();
