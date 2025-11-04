@@ -1,6 +1,7 @@
 {
   "name": "automation_saucedemo_playwright",
   "version": "1.0.0",
+  "type": "module",
   "description": "Testes automatizados E2E com Playwright",
   "main": "index.js",
   "scripts": {
@@ -10,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^10.1.0",
     "@playwright/test": "^1.56.1",
     "@types/node": "^24.10.0"
   }

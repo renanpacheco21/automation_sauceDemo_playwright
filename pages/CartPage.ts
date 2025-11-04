@@ -100,5 +100,14 @@ export class CartPage {
       await this.verifyProductInCart(productName);
     }
   }
+
+  async clickCheckout() {
+    const checkoutButton = this.page.locator('[data-test="checkout"], button:has-text("Checkout")');
+    await expect(checkoutButton).toBeVisible();
+    await expect(checkoutButton).toBeEnabled();
+    await checkoutButton.click();
+    // Aguarda navegar para a página de checkout
+    await expect(this.page).toHaveURL(/.*checkout-step-one.*/);
+  }
 }
 
